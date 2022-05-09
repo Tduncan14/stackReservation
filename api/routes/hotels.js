@@ -38,12 +38,21 @@ router.post("/", async(req, res) =>{
 
 
 //update
-router.put("/:id", async (req,res) => {
+router.put("/update/:id", async (req,res) => {
+
+    
+    // console.log(req.body,req.params.id,'update area')
+
+    // let params = req.params.id
+
+    // let stat = await hotel.findById(params);
+
+    // console.log(stat)
 
 
     try{
         // updating the req.body
-        const updatedHotel = await Hotel.findByIdAndUpdate(req.params.id,{$set:req.body})
+        const updatedHotel = await hotel.findByIdAndUpdate(req.params.id,{$set:req.body})
         res.status(200).json(updatedHotel)
     }
     catch(err){
