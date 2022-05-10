@@ -31,6 +31,21 @@ app.use('/hotels',hotelRoutes)
 app.use('/users',userRoutes)
 app.use('/room',roomRoutes)
 
+
+app.use((err,req,res,next) =>{
+     const errorStatus = err.status || 500
+     const errorMessage = err.message || "something in wrong"
+     return res.status(errorStatus).json({
+         success:false,
+         status:errorStatus,
+         message: errorMessage,
+         stack:err.stack
+
+     });
+})
+
+
+
 const port = process.env.PORT || 8000
 
 
