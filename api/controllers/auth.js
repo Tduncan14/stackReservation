@@ -73,7 +73,12 @@ exports.login = async (req,res,next) => {
         if(!isPasswordCorrect){  return next(createError(400,"wrong password or username!"))}
 
 
-        res.status(200).json(user)
+        const {passsword,isAdmin, ...otherDetails} = user._doc
+
+
+
+
+        res.status(200).json(otherDetails)
 
     }
     catch(err){
