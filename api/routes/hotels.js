@@ -2,13 +2,14 @@ const express = require('express');
 const { createHotel, updateHotel, deleteHotel, getSingleHotel, getAllHotels } = require('../controllers/hotel');
 const hotel = require('../models/hotel');
 const {createError}= require('../utils/error');
+const { verifyAdmin } = require('../utils/verifyToken');
 
 
 const router = express.Router();
 
 
 // creates
-router.post("/",createHotel)
+router.post("/",verifyAdmin,createHotel)
 
 
 // console.log(req.body)
@@ -38,12 +39,12 @@ router.post("/",createHotel)
 
 
 // updates the hotel
-router.put("/update/:id",updateHotel)
+router.put("/update/:id",verifyAdmin,updateHotel)
 
 
 
 // delete
-router.delete("/:id",deleteHotel)
+router.delete("/:id",verifyAdmin,deleteHotel)
 
 
 

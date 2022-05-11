@@ -28,7 +28,7 @@ exports.verifyToken = (req,res,next) => {
 
 exports.verifyUser = (req,res,next) => {
 
-    this.verifyToken(req,res,()=>{
+    this.verifyToken(req,res,next,()=>{
 
 
         // check if its the user or not
@@ -50,7 +50,7 @@ exports.verifyUser = (req,res,next) => {
 
 exports.verifyAdmin = (req,res,next) => {
 
-    this.verifyToken(req,res, () => {
+    this.verifyToken(req,res,next, () => {
 
 
         if(req.user.isAdmin){

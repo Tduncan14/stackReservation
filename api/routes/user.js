@@ -32,15 +32,15 @@ const router = express.Router()
 // })
 
 
-router.get('/',getAllUser) 
+router.get('/', getAllUser) 
 
-router.get('/:id',getUser)
-
-
-router.put('/update/:id',updateUser)
+router.get('/:id',verifyUser,getUser)
 
 
-router.delete('/delete/:id',deleteUser)
+router.put('/update/:id',verifyUser,updateUser)
+
+
+router.delete('/delete/:id',verifyUser,deleteUser)
 
 
 
