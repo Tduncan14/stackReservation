@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const app = express();
+const cookieParser = require('cookie-parser');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const roomRoutes = require('./routes/room');
@@ -24,6 +25,7 @@ mongoose.connect(process.env.MONGOURI, () => {
 
 // middleswares
 
+app.use(cookieParser())
 app.use(express.json())
 
 app.use('/auth',authRoutes)
