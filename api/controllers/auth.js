@@ -1,12 +1,34 @@
 const User = require('../models/user');
+const bcrypt = require('bcryptjs');
+const { createError } = require('../utils/error');
 
 exports.register = async (req,res,next) =>{
 
 
-    let newUser = new User 
+
+
 
 
     try{
+
+        const salt = bcrypt.genSaltSync(10)
+        const hash = bcrypt.hashSync(req.body.password,salt)
+
+
+
+        const newUser = new User ({
+            username:req.body.username,
+            email:req.body.email,
+            password:hash
+        })
+
+        console.log(newUser,'user')
+
+
+        await newUser.save()
+         newUser.password = null 
+         res.status(200).json({msg:'userHas been created',
+          newUser})
 
     }
 
@@ -15,5 +37,53 @@ exports.register = async (req,res,next) =>{
     catch(err){
 
     }
+
+}
+
+
+exports.login = async (req,res,next) => {
+
+
+    const {username,password} = req.body
+
+    //   if(!password){
+    //       return res.status(500).json({
+    //           msg:'password or email is empty'
+    //       })
+    //   }
+
+    //   if(!username){
+    //     return res.status(500).json({
+    //         msg:'password or email is empty'
+    //     })
+    // }
+
+    try{
+
+        console.log('hello')
+        const user =  await User.findOne({username:req.body.username});
+        if(!user) return next(createError(404,"User not found"));
+
+
+        // comparing password
+
+        const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password)
+
+
+        if(!isPasswordCorrect)(   next(createError(400,"wrong password or username!")))
+
+
+        res.status(200).json(user)
+
+    }
+    catch(err){
+
+        console.log(err)
+    }
+
+
+
+
+
 
 }

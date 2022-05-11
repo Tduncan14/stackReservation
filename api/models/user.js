@@ -26,7 +26,7 @@ const UserSchema = mongoose.Schema({
         default:false
     }
 
-})
+},{timeStamps:true})
 
 
 
