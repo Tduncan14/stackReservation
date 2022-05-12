@@ -9,7 +9,7 @@ const router = express.Router();
 
 
 // post the room
-room.post('/',verifyAdmin,createRoom)
+router.post('/:hotelid',verifyAdmin,createRoom)
 
 // get all rooms
 router.get('/room',getAllRooms)

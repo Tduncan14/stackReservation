@@ -1,4 +1,4 @@
-const user = require('../models/user');
+const User = require('../models/user');
 
 
 
@@ -10,12 +10,12 @@ const user = require('../models/user');
 exports.getUser = async(req,res,next) => {
 
 
-    
-
 
 try{
 
     const user = await User.findById(req.params.id)
+
+
     res.status(200).json({msg:'user is found', user})
 }
 
