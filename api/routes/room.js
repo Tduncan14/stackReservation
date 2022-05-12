@@ -1,14 +1,27 @@
 const express = require('express');
+const { createRoom, getAllRooms, getRoom, updateRoom, deleteRoom } = require('../controllers/room');
+const room = require('../models/room');
+const { verifyAdmin } = require('../utils/verifyToken');
 
 
-const Router = express.Router();
+const router = express.Router();
 
 
 
-Router.get('/', (req,res) =>{
+// post the room
+room.post('/',verifyAdmin,createRoom)
 
-    res.send('this the rooms api')
-}) 
+// get all rooms
+router.get('/room',getAllRooms)
+
+// get a single room
+router.get('/room/:id',getRoom);
+
+// update the room
+router.put('/room/update/:id',updateRoom);
+
+// delete the room
+router.delete('/room/delete/:id',deleteRoom);
 
 
-module.exports = Router
+module.exports = router
