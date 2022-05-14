@@ -15,13 +15,13 @@ router.post('/:hotelid',verifyAdmin,createRoom)
 router.get('/room',getAllRooms)
 
 // get a single room
-router.get('/room/:id',getRoom);
+router.get('/:id',getRoom);
 
 // update the room
-router.put('/room/update/:id',updateRoom);
+router.put('/update/:id',updateRoom);
 
 // delete the room
-router.delete('/room/delete/:id',deleteRoom);
+router.delete('/delete/:id/:hotelId',deleteRoom);
 
 
 module.exports = router

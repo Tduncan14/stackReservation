@@ -1,5 +1,6 @@
 
 const  Hotel = require( '../models/hotel');
+const room = require('../models/room');
 const Room = require('../models/room');
 const { createError } = require('../utils/error');
 
@@ -27,10 +28,14 @@ exports.createRoom = async(req,res,next) => {
 
 }
 
+
+
+
+
 exports.updateRoom = async (req,res,next) => {
 
     try{
-        const updateRoom = await Room.findByIdAndUpdate(req.params.match,{$set:req.body},{new:true})
+        const updateRoom = await Room.findByIdAndUpdate(req.params.id,{$set:req.body},{new:true})
 
         res.status(200).json({msg:'the room has been saved and updated', updateRoom})
     }
@@ -49,18 +54,42 @@ exports.updateRoom = async (req,res,next) => {
 
 
 
-exports.deleteRoom  = async(req,res,next) => {
+exports.deleteRoom = async (req,res,next) => {
+
+    const hotelId = req.params.hotelId
+
+
+    console.log(hotelId,req.params.id)
+    
 
 
     try{
+        await room.findByIdAndDelete(req.params.id)
 
+        try{
+            await Hotel.findByIdAndUpdate(hotelId , {$pull:{rooms:req.params.id}})
+            
+   
+        }
+
+
+        catch(err){
+            console.log(`this is the ${err}`)
+        }
+        res.status(200).json({msg:'the room is deleted'})
     }
 
     catch(err){
 
-    }
-}
+        res.status(404).json('room was not deleted')
 
+
+    }
+
+
+
+
+}
 
 exports.getAllRooms = async(req,res,next) => {
 
